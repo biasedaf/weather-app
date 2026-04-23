@@ -4,12 +4,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    font-weight: 600;
 }
 
 body {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-weight: 600;
     background: url('assets/bg.jpg');
     width: 100%;
     height: 100dvh;
@@ -28,6 +28,11 @@ body::before {
     height: 100dvh;
     background: rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(15px);
+}
+
+input, button {
+    font-family: inherit;
+    color: inherit;
 }
 
 /* UTILITY CLASSES */
@@ -185,5 +190,80 @@ body::before {
 .section-message img {
     height: 180px;
     width: fit-content;
-
 }
+
+/* LOGIN VIEW */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-header h2 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.login-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 0px;
+}
+
+.login-input {
+    padding-right: 16px;
+}
+
+.login-btn {
+    position: static;
+    transform: none;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px;
+    border-radius: 99px;
+    font-size: 16px;
+    transition: 0.3s;
+    margin-top: 5px;
+    width: 100%;
+    justify-content: center;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.divider span {
+    padding: 0 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.google-sso-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
