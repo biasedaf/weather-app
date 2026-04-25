@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # Node.js Backend API
+  backend:
+    image: biasedaf/weather-backend:latest
+    container_name: weather-backend
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - weather-net
+
+  # Nginx Frontend & Reverse Proxy
+  frontend:
+    image: biasedaf/weather-frontend:latest
+    container_name: weather-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - weather-net
+
+networks:
+  weather-net:
+    driver: bridge
