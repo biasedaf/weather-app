@@ -1,3 +1,5 @@
+// Dynamic API base URL no longer needed, using relative paths for Nginx proxy.
+
 // Cookie Sync Engine
 function getAppCookie(name) {
     const value = `; ${document.cookie}`;
@@ -83,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (userid && password) {
                 try {
                     // Try to login first
-                    let response = await fetch('http://localhost:3000/api/auth/login', {
+                    let response = await fetch('/api/auth/login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: userid, password: password })
@@ -93,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (response.status === 404 && data.error === 'User not found') {
                         // User doesn't exist, try to sign up
-                        response = await fetch('http://localhost:3000/api/auth/signup', {
+                        response = await fetch('/api/auth/signup', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ email: userid, password: password, name: userid.split('@')[0] })
@@ -186,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Successful search, update history
             if (window.currentUser) {
                 try {
-                    await fetch('http://localhost:3000/api/user/history', {
+                    await fetch('/api/user/history', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: window.currentUser, city: city })

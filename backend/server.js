@@ -8,8 +8,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+// Note: cors() is configured but will be redundant once Nginx is proxying requests
 app.use(cors({ origin: '*' }));
 app.use(express.json());
+
+// Trust proxy to ensure correct client IP extraction when running behind Nginx
+app.set('trust proxy', 1);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)

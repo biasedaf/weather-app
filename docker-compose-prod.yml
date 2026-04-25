@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    # Points to your Docker Hub image instead of a local folder
+    image: biasedaf/weather-backend:v1
+    container_name: weather-backend
+    restart: always
+    # They must provide their own .env file with their MongoDB URI
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    networks:
+      - weather-net
+
+  frontend:
+    # Points to your Docker Hub image
+    image: biasedaf/weather-frontend:v1
+    container_name: weather-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - weather-net
+
+networks:
+  weather-net:
+    driver: bridge
