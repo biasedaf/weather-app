@@ -3,27 +3,17 @@ version: '3.8'
 services:
   # Node.js Backend API
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: weather-backend:latest
+    image: biasedaf/weather-backend:latest
     container_name: weather-backend
     restart: always
     env_file:
-      - ./backend/.env
+      - .env
     networks:
       - weather-net
-    # Ports are not strictly necessary to expose since frontend proxies internally,
-    # but we map it if direct access is needed during development.
-    ports:
-      - "3000:3000"
 
   # Nginx Frontend & Reverse Proxy
   frontend:
-    build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
-    image: weather-frontend:latest
+    image: biasedaf/weather-frontend:latest
     container_name: weather-frontend
     restart: always
     ports:
