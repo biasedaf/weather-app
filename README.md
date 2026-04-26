@@ -11,7 +11,7 @@ A production-ready, multi-container weather application built with a Node.js/Exp
 
 ## Tech Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+).
+- **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js, Express.js.
 - **Infrastructure**: Docker, Docker Compose, Nginx.
 - **Database**: MongoDB Atlas.
@@ -23,19 +23,36 @@ To ensure a secure and professional deployment, this application utilizes an Ngi
 
 ### Request Flow and Network Topology
 
-```mermaid
-flowchart TD
-    classDef default stroke-dasharray: 5 5
-    
-    Client["Client Browser"] -->|HTTP :80| Nginx["Nginx Reverse Proxy (Frontend Container)"]
-    
-    subgraph Docker Network ["Internal Docker Bridge Network"]
-        Nginx -->|Serves Base Path /| StaticFiles["Static Assets (HTML/CSS/JS)"]
-        Nginx -->|Proxies /api/*| NodeServer["Node.js Express API (Backend Container :3000)"]
-    end
-    
-    NodeServer -->|Database Connection| MongoDB["MongoDB Atlas"]
-    NodeServer -->|SSO Authentication| GoogleAuth["Google OAuth 2.0"]
+```text
+                  +------------------+
+                  |  Client Browser  |
+                  +--------+---------+
+                           |
+                           | HTTP :80
+                           v
++-------------------------------------------------------+
+|             Internal Docker Bridge Network            |
+|                                                       |
+|      +------------------------------------------+     |
+|      | Nginx Reverse Proxy (Frontend Container) |     |
+|      +-------+--------------------------+-------+     |
+|              |                          |             |
+|  Serves Base Path /             Proxies /api/*        |
+|              |                          |             |
+|              v                          v             |
+| +-------------------------+  +----------------------+ |
+| | Static Assets           |  | Node.js Express API  | |
+| | (HTML/CSS/JS)           |  | (Backend Container)  | |
+| +-------------------------+  +----------------------+ |
++-------------------------------------------------------+
+                                          |
+                 +------------------------+------------------+
+                 |                                           |
+                 v                                           v
+       +------------------+                        +------------------+
+       |   MongoDB Atlas  |                        | Google OAuth 2.0 |
+       |   (Database)     |                        | (Authentication) |
+       +------------------+                        +------------------+
 ```
 
 - **Single Entry Point**: Nginx listens on Port 80 and manages all incoming traffic. Static frontend files are served directly, while any request targeting the `/api/*` endpoints is seamlessly proxied to the internal Node.js backend operating on Port 3000.
@@ -60,6 +77,7 @@ You can deploy this application on any Docker-capable host with a single command
 
 2. **Environment Variables**
    Create a `.env` file in the same directory as your `docker-compose.yml` file:
+
    ```env
    MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/app
    PORT=3000
@@ -67,6 +85,7 @@ You can deploy this application on any Docker-capable host with a single command
 
 3. **Launch the Application**
    Run the following command to pull the images and start the services in detached mode:
+
    ```bash
    docker-compose up -d
    ```
