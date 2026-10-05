@@ -79,7 +79,7 @@ You can deploy this application on any Docker-capable host with a single command
    Create a `.env` file in the same directory as your `docker-compose.yml` file:
 
    ```env
-   MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/app
+   MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/app
    PORT=3000
    ```
 
